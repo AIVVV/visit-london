@@ -4,4 +4,20 @@ body {
     h1 {
         color: #fff;
     }
+    h1:hover {
+        transition: color 1s ease;
+    }
+}
+
+h2 {
+    color: red;
+    transform: rotate(90deg);
+}
+
+h2:hover {
+    transition: color 2s ease;
+}
+
+h3:hover {
+    transition: color 2s ease;
 }
