@@ -1,0 +1,72 @@
+[33mcommit 41d7589e282a6d208f3efd1863a00ef5b29c7da3[m
+Author: Angel <Angel>
+Date:   Wed May 3 19:33:06 2017 +0300
+
+    add last cnagges
+
+[33mcommit 5bf58782fd5b7b8e3d1b5ba8ecf2067f8b5f5433[m
+Author: Angel <Angel>
+Date:   Wed May 3 18:41:36 2017 +0300
+
+    last commit
+
+[33mcommit 825f4dad33678e4e6c80e4a6cb13657f93b85292[m
+Author: Angel <Angel>
+Date:   Wed May 3 17:49:37 2017 +0300
+
+    move js files
+
+[33mcommit f83dfd6756ef44235f1d639244ce809aafad997e[m
+Author: Angel <Angel>
+Date:   Wed May 3 17:03:39 2017 +0300
+
+    gulp copy added
+
+[33mcommit efd1d60ac5dece5a861ce9a7e9cdf3bb81cc0675[m
+Author: Angel <Angel>
+Date:   Wed May 3 16:12:45 2017 +0300
+
+    browser-sync added
+
+[33mcommit 203f20020c5cf536681f9ce51efc413cee4a4d05[m
+Author: Angel <Angel>
+Date:   Wed May 3 14:36:48 2017 +0300
+
+    gulp and gulp sass added
+
+[33mcommit 0eb292cb5648663cb14761dbc5b2718455ea94a7[m
+Author: Angel <Angel>
+Date:   Tue May 2 18:05:46 2017 +0300
+
+    install gulp and add gulpfile.js
+
+[33mcommit 90ce6042beb3881095cfd8271f105db62d1f0b9d[m
+Author: Angel <Angel>
+Date:   Tue May 2 17:57:22 2017 +0300
+
+    package,json added
+
+[33mcommit 0d17c54a79cdfb7e1c690278ff334a27c1ca8ea8[m
+Merge: 23848f7 ea714e7
+Author: Angel <Angel>
+Date:   Tue May 2 17:18:51 2017 +0300
+
+    Merge branch 'master' of https://github.com/AIVVV/workflow
+
+[33mcommit 23848f7d21a8e78449c03fde5e78fb56a68b90be[m
+Author: Angel <Angel>
+Date:   Tue Apr 25 12:49:06 2017 +0300
+
+    'delete'
+
+[33mcommit ea714e71a47f1f380c0b5a18afc54f8a77b66e17[m
+Author: Angel Ivanov <a_ivanovvv@abv.bg>
+Date:   Tue Apr 25 12:44:37 2017 +0300
+
+    Create README.md
+
+[33mcommit 9d59b55227d0dbd8b8df61a16e456e6fe83ba6c7[m
+Author: Angel <Angel>
+Date:   Tue Apr 25 12:39:55 2017 +0300
+
+    first commint
