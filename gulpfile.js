@@ -20,7 +20,8 @@ var SOURCEPATHS = {
 var APPPATH = {
     root: 'app/',
     css: 'app/css',
-    js: 'app/js'
+    js: 'app/js',
+    fonts: 'app/fonts'
 };
 
 // Creating all tesk we need here 
@@ -47,6 +48,14 @@ gulp.task('sass', function() {
         .pipe(concat('app.css'))
         .pipe(gulp.dest(APPPATH.css));
 });
+
+//
+
+gulp.task('moveFonts', function(){
+    gulp.src('./node_modules/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}')
+    .pipe(gulp.dest(APPPATH.fonts));
+});
+
 // 2. Copy task - this task is for creating copies of html files form srs folder to app folder.
 gulp.task('scripts', ['clean-scripts'], function() {
     gulp.src(SOURCEPATHS.jsSource)
@@ -71,7 +80,7 @@ gulp.task('serve', ['sass'], function() {
 });
 
 // 5. Gulp watch task - this task is for looking if there any changes in scss or js files of html files. If there are the watch task automaticly updated and refreshed in browser.
-gulp.task('watch', ['serve', 'sass', 'copy', 'clean-html', 'clean-scripts', 'scripts'], function() {
+gulp.task('watch', ['serve', 'sass', 'copy', 'clean-html', 'clean-scripts', 'scripts', 'moveFonts'], function() {
     gulp.watch([SOURCEPATHS.sassSource], ['sass']);
     gulp.watch([SOURCEPATHS.htmlSource], ['copy']);
     gulp.watch([SOURCEPATHS.jsSource], ['scripts']);
