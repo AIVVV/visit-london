@@ -13277,10 +13277,15 @@ global.jQuery = require('jquery');
 bootstrap = require('bootstrap');
 mustache = require('mustache');
 
-
 jQuery(document).ready(function() {
-    alert('hello');
-})
+    var jqxhr = jQuery.getJSON('data.json', function() {
+
+    }).done(function(data) {
+        var template = jQuery('#template').html();
+        var showTemplate = mustache.render(template, data);
+        jQuery('#gallery').html(showTemplate);
+    });
+});
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"bootstrap":1,"jquery":14,"mustache":15}]},{},[16])

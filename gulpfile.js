@@ -8,12 +8,15 @@ var clean = require('gulp-clean');
 var concat = require('gulp-concat');
 var browserify = require('gulp-browserify');
 var merge = require('merge-stream');
+var newer = require('gulp-newer');
+var imagemin = require('gulp-imagemin');
 
 // Object for source folder paths
 var SOURCEPATHS = {
     sassSource: 'src/scss/*.scss',
     htmlSource: 'src/*html',
-    jsSource: 'src/js/**'
+    jsSource: 'src/js/**',
+    imgSource: 'src/img/**'
 };
 
 // Object for app folder paths
@@ -21,7 +24,8 @@ var APPPATH = {
     root: 'app/',
     css: 'app/css',
     js: 'app/js',
-    fonts: 'app/fonts'
+    fonts: 'app/fonts',
+    img: 'app/img'
 };
 
 // Creating all tesk we need here 
@@ -44,19 +48,25 @@ gulp.task('sass', function() {
     sassFiles = gulp.src(SOURCEPATHS.sassSource)
         .pipe(autoPrefixer())
         .pipe(sass({ outputStyle: 'expanded' }).on('error', sass.logError));
-        return merge(bootstrapCSS, sassFiles)
+    return merge(bootstrapCSS, sassFiles)
         .pipe(concat('app.css'))
         .pipe(gulp.dest(APPPATH.css));
 });
 
-//
-
-gulp.task('moveFonts', function(){
-    gulp.src('./node_modules/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}')
-    .pipe(gulp.dest(APPPATH.fonts));
+gulp.task('images', function() {
+    gulp.src(SOURCEPATHS.imgSource)
+        .pipe(newer(APPPATH.img))
+        .pipe(imagemin())
+        .pipe(gulp.dest(APPPATH.img));
 });
 
-// 2. Copy task - this task is for creating copies of html files form srs folder to app folder.
+// 2. Moving bootstrap fonts from bootstrap to app folder
+gulp.task('moveFonts', function() {
+    gulp.src('./node_modules/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}')
+        .pipe(gulp.dest(APPPATH.fonts));
+});
+
+// 3. Copy task - this task is for creating copies of html files form srs folder to app folder.
 gulp.task('scripts', ['clean-scripts'], function() {
     gulp.src(SOURCEPATHS.jsSource)
         .pipe(concat('main.js'))
@@ -64,13 +74,13 @@ gulp.task('scripts', ['clean-scripts'], function() {
         .pipe(gulp.dest(APPPATH.js));
 });
 
-// 3. Copy task - this task is for creating copies of html files form srs folder to app folder.
+// 4. Copy task - this task is for creating copies of html files form srs folder to app folder.
 gulp.task('copy', ['clean-html'], function() {
     gulp.src(SOURCEPATHS.htmlSource)
         .pipe(gulp.dest(APPPATH.root));
 });
 
-// 4. Browser sync task - this task is for automaticly update all changes in css, html and js files. Also create a localhost path and automaticly added in browser.
+// 5. Browser sync task - this task is for automaticly update all changes in css, html and js files. Also create a localhost path and automaticly added in browser.
 gulp.task('serve', ['sass'], function() {
     browserSync.init([APPPATH.css + '/*.css', APPPATH.root + '/*.html', APPPATH.js + '/*.js'], {
         server: {
@@ -79,8 +89,8 @@ gulp.task('serve', ['sass'], function() {
     });
 });
 
-// 5. Gulp watch task - this task is for looking if there any changes in scss or js files of html files. If there are the watch task automaticly updated and refreshed in browser.
-gulp.task('watch', ['serve', 'sass', 'copy', 'clean-html', 'clean-scripts', 'scripts', 'moveFonts'], function() {
+// 6. Gulp watch task - this task is for looking if there any changes in scss or js files of html files. If there are the watch task automaticly updated and refreshed in browser.
+gulp.task('watch', ['serve', 'sass', 'copy', 'clean-html', 'clean-scripts', 'scripts', 'moveFonts','images'], function() {
     gulp.watch([SOURCEPATHS.sassSource], ['sass']);
     gulp.watch([SOURCEPATHS.htmlSource], ['copy']);
     gulp.watch([SOURCEPATHS.jsSource], ['scripts']);
