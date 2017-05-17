@@ -1,7 +1,7 @@
 {
     "gallery": [{
         "destiny": "gallery image 1",
-        "image": "gallery-1.jpg"
+        "image": "gallery-2.jpg"
     }, {
         "destiny": "gallery image 2",
         "image": "gallery-2.jpg"
@@ -16,6 +16,6 @@
         "image": "gallery-5.jpg"
     }, {
         "destiny": "gallery image 6",
-        "image": "gallery-6.jpg"
+        "image": "gallery-5.jpg"
     }]
 }
