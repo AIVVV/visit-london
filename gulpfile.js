@@ -14,6 +14,7 @@ var injectPartials = require('gulp-inject-partials');
 var minify = require('gulp-minify');
 var rename = require('gulp-rename');
 var cssmin = require('gulp-cssmin');
+var htmlmin = require('gulp-htmlmin');
 
 // Object for source folder paths
 var SOURCEPATHS = {
@@ -80,7 +81,9 @@ gulp.task('scripts', ['clean-scripts'], function() {
         .pipe(gulp.dest(APPPATH.js));
 });
 
-/*----- Production task -----*/  
+/*----- Production task -----*/
+
+// minify java script files
 gulp.task('compress', function() {
     gulp.src(SOURCEPATHS.jsSource)
         .pipe(concat('main.js'))
@@ -88,6 +91,7 @@ gulp.task('compress', function() {
         .pipe(gulp.dest(APPPATH.js));
 });
 
+//minify css files
 gulp.task('compresscss', function() {
     var bootstrapCSS = gulp.src('./node_modules/bootstrap/dist/css/bootstrap.css');
     var sassFiles;
@@ -100,7 +104,16 @@ gulp.task('compresscss', function() {
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest(APPPATH.css));
 });
-/*----- end of production task -----*/ 
+
+// minify html files
+gulp.task('minifyHtml', function() {
+    return gulp.src(SOURCEPATHS.htmlSource)
+        .pipe(injectPartials())
+        .pipe(htmlmin({ collapseWhitespace: true }))
+        .pipe(gulp.dest(APPPATH.root));
+});
+
+/*----- end of production task -----*/
 
 // 5. This task allows two things - to create modules of html files (header.html;footer.html;navigation.html), and creating copies of html files form src folder to app folder.
 gulp.task('html', function() {
@@ -134,3 +147,6 @@ gulp.task('watch', ['serve', 'sass', 'clean-html', 'clean-scripts', 'scripts', '
 
 // N. Gulp default task
 gulp.task('default', ['watch']);
+
+// N. Gulp production task - when all site is ready this task compress all files - html, css and js.
+gulp.task('production', ['minifyHtml', 'compresscss', 'compress']);
