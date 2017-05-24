@@ -19,6 +19,7 @@ var htmlmin = require('gulp-htmlmin');
 // Object for source folder paths
 var SOURCEPATHS = {
     sassSource: 'src/scss/*.scss',
+    sassApp: 'src/scss/app.scss',
     htmlSource: 'src/*.html',
     htmlPartialSourse: 'src/partial/*.html',
     jsSource: 'src/js/**',
@@ -49,12 +50,9 @@ gulp.task('clean-scripts', function() {
 
 // 1. Gulp sass - This task is for compile scss files to css files
 gulp.task('sass', function() {
-    var bootstrapCSS = gulp.src('./node_modules/bootstrap/dist/css/bootstrap.css');
-    var sassFiles;
-    sassFiles = gulp.src(SOURCEPATHS.sassSource)
+    sassFiles = gulp.src(SOURCEPATHS.sassApp)
         .pipe(autoPrefixer())
-        .pipe(sass({ outputStyle: 'expanded' }).on('error', sass.logError));
-    return merge(bootstrapCSS, sassFiles)
+        .pipe(sass({ outputStyle: 'expanded' }).on('error', sass.logError))
         .pipe(concat('app.css'))
         .pipe(gulp.dest(APPPATH.css));
 });
@@ -65,12 +63,6 @@ gulp.task('images', function() {
         .pipe(newer(APPPATH.img))
         .pipe(imagemin())
         .pipe(gulp.dest(APPPATH.img));
-});
-
-// 3. Moving bootstrap fonts from bootstrap to app folder
-gulp.task('moveFonts', function() {
-    gulp.src('./node_modules/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}')
-        .pipe(gulp.dest(APPPATH.fonts));
 });
 
 // 4. Copy task - this task is for creating copies of html files form srs folder to app folder.
@@ -93,16 +85,13 @@ gulp.task('compress', function() {
 
 //minify css files
 gulp.task('compresscss', function() {
-    var bootstrapCSS = gulp.src('./node_modules/bootstrap/dist/css/bootstrap.css');
-    var sassFiles;
     sassFiles = gulp.src(SOURCEPATHS.sassSource)
         .pipe(autoPrefixer())
-        .pipe(sass({ outputStyle: 'expanded' }).on('error', sass.logError));
-    return merge(bootstrapCSS, sassFiles)
-        .pipe(concat('app.css'))
-        .pipe(cssmin())
-        .pipe(rename({ suffix: '.min' }))
-        .pipe(gulp.dest(APPPATH.css));
+        .pipe(sass({ outputStyle: 'expanded' }).on('error', sass.logError))
+            .pipe(concat('app.css'))
+            .pipe(cssmin())
+            .pipe(rename({ suffix: '.min' }))
+            .pipe(gulp.dest(APPPATH.css));
 });
 
 // minify html files
@@ -138,7 +127,7 @@ gulp.task('serve', ['sass'], function() {
 });
 
 // 8. Gulp watch task - this task is for looking if there any changes in scss or js files of html files. If there are the watch task automaticly updated and refreshed in browser.
-gulp.task('watch', ['serve', 'sass', 'clean-html', 'clean-scripts', 'scripts', 'moveFonts', 'images', 'html'], function() {
+gulp.task('watch', ['serve', 'sass', 'clean-html', 'clean-scripts', 'scripts', 'images', 'html'], function() {
     gulp.watch([SOURCEPATHS.sassSource], ['sass']);
     // gulp.watch([SOURCEPATHS.htmlSource], ['copy']);
     gulp.watch([SOURCEPATHS.jsSource], ['scripts']);
